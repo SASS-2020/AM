@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Attendance Manager_1</string>
+    <string name="signin_page">Sign In</string>
+    <string name="signup_page">Sign Up</string>
+    <string name="emailIdText">Email ID</string>
+    <string name="passwordText">Password</string>
+</resources>

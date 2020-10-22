@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/id_signuppage"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ic_bg"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/editTextEmailAddressSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/bg_edittext_login"
+        android:drawableStart="@drawable/et_email_focused"
+        android:drawablePadding="5dp"
+        android:ems="10"
+        android:hint="@string/emailIdText"
+        android:inputType="textEmailAddress"
+        android:padding="5dp"
+        android:textColor="@color/colorAccent"
+        android:textColorHint="@color/colorDark"
+        android:textStyle="italic|bold"
+        app:layout_constraintBottom_toTopOf="@+id/editTextPasswordSignUp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextPasswordSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/bg_edittext_login"
+        android:drawableStart="@drawable/et_password_focused"
+        android:drawablePadding="5dp"
+        android:ems="10"
+        android:hint="@string/passwordText"
+        android:inputType="textPassword"
+        android:padding="5dp"
+        android:textColor="@color/colorAccent"
+        android:textColorHint="@color/colorDark"
+        android:textStyle="italic|bold"
+        app:layout_constraintBottom_toTopOf="@+id/button_signupPage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_signupPage"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginBottom="210dp"
+        android:background="@drawable/bg_button_"
+        android:text="Sign Up"
+        android:textColor="#ffffff"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="40dp"
+        android:text="@string/signup_page"
+        android:textColor="@color/colorAccent"
+        android:textSize="60dp"
+        android:textStyle="italic|bold"
+        app:layout_constraintBottom_toTopOf="@+id/editTextEmailAddressSignUp"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
