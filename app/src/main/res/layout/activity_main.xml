@@ -22,11 +22,12 @@
         android:hint="@string/emailIdText"
         android:inputType="textEmailAddress"
         android:padding="5dp"
+        android:textColor="@color/colorAccent"
         android:textColorHint="@color/colorDark"
         android:textStyle="italic|bold"
-        android:textColor="@color/colorAccent"
         app:layout_constraintBottom_toTopOf="@+id/editTextPassword"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
@@ -43,11 +44,12 @@
         android:hint="@string/passwordText"
         android:inputType="textPassword"
         android:padding="5dp"
+        android:textColor="@color/colorAccent"
         android:textColorHint="@color/colorDark"
         android:textStyle="italic|bold"
-        android:textColor="@color/colorAccent"
         app:layout_constraintBottom_toTopOf="@+id/button_signin"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -81,12 +83,16 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/signin_page"
         android:textColor="@color/colorAccent"
         android:textSize="60dp"
         android:textStyle="italic|bold"
         app:layout_constraintBottom_toTopOf="@+id/editTextEmailAddress"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.955"
+        app:layout_constraintStart_toEndOf="@+id/editTextPassword"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.932" />
 </androidx.constraintlayout.widget.ConstraintLayout>
