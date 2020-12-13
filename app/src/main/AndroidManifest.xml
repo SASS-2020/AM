@@ -9,6 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Classes_Activity"></activity>
+        <activity android:name=".test_firestore" />
+        <activity android:name=".ui.test_firestore" />
         <activity android:name=".SignUpAcivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

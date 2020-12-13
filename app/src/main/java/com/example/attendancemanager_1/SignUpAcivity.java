@@ -26,6 +26,7 @@ public class SignUpAcivity extends AppCompatActivity {
     private EditText passwordEditTextSignUp = null;
     private Button buttonSignUp = null;
     private FirebaseAuth mAuth = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +41,7 @@ public class SignUpAcivity extends AppCompatActivity {
             public boolean onTouch(View view, MotionEvent motionEvent) {
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(view.getWindowToken(),0);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 mailEditTextSignUp.clearFocus();
                 passwordEditTextSignUp.clearFocus();
                 return true;
@@ -49,13 +50,11 @@ public class SignUpAcivity extends AppCompatActivity {
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mailEditTextSignUp.getText().toString().length() == 0)
-                {
+                if (mailEditTextSignUp.getText().toString().length() == 0) {
                     mailEditTextSignUp.requestFocus();
                 }
-                if(passwordEditTextSignUp.getText().toString().length() <= 6)
-                {
-                    Toast.makeText(SignUpAcivity.this,"Password too short !",Toast.LENGTH_LONG).show();
+                if (passwordEditTextSignUp.getText().toString().length() <= 6) {
+                    Toast.makeText(SignUpAcivity.this, "Password too short !", Toast.LENGTH_LONG).show();
                     passwordEditTextSignUp.requestFocus();
                 }
                 signUp(mailEditTextSignUp.getText().toString(), passwordEditTextSignUp.getText().toString());
@@ -63,16 +62,15 @@ public class SignUpAcivity extends AppCompatActivity {
         });
 
     }
-    private void signUp(String mailID, String password)
-    {
+
+    private void signUp(String mailID, String password) {
         mAuth.createUserWithEmailAndPassword(mailID, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()) {
+                if (task.isSuccessful()) {
                     //Log.d("success", "createUserWithEmail:success");
                     Toast.makeText(SignUpAcivity.this, "Hola!", Toast.LENGTH_LONG).show();
-                }
-                else{
+                } else {
                     Toast.makeText(SignUpAcivity.this, "Oh No!", Toast.LENGTH_LONG).show();
 
                 }
