@@ -62,7 +62,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void signIn() {
-        String email_id = mailEditText.getText().toString();
+        startActivity(new Intent(MainActivity.this, Classes_Activity.class));//FOR TESTING PURPOSE NOT PART OF ACTUAL APP.........ACCESS WITHOUT AUTHENTICATION
+        //Uncomment the below after testing.............DO NOT CHANGE THE BELOW CODE
+        /*String email_id = mailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
         if (email_id.length() == 0 || password.length() == 0) {
             Toast.makeText(MainActivity.this, "Check Email ID and Password", Toast.LENGTH_LONG).show();
@@ -72,12 +74,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    startActivity(new Intent(MainActivity.this, test_firestore.class));
+                    startActivity(new Intent(MainActivity.this, Classes_Activity.class));
                 } else {
 
                 }
             }
-        });
+        });*/
     }
 
 }
