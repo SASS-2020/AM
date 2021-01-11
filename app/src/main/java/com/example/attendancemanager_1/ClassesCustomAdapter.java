@@ -1,5 +1,7 @@
 package com.example.attendancemanager_1;
 
+import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import java.util.ArrayList;
 public class ClassesCustomAdapter extends RecyclerView.Adapter<ClassesCustomAdapter.ClassesCustomViewHolder> {
 
     private ArrayList<ClassesInfoHolder> classesList;
+    private Context context;
     public static class ClassesCustomViewHolder extends RecyclerView.ViewHolder {
 
         TextView textSubjectName;
@@ -28,9 +31,10 @@ public class ClassesCustomAdapter extends RecyclerView.Adapter<ClassesCustomAdap
         }
     }
 
-    public ClassesCustomAdapter(ArrayList<ClassesInfoHolder> list)
+    public ClassesCustomAdapter(ArrayList<ClassesInfoHolder> list, Context context)
     {
         classesList = list;
+        this.context = context;
     }
 
     @NonNull
@@ -43,8 +47,8 @@ public class ClassesCustomAdapter extends RecyclerView.Adapter<ClassesCustomAdap
     public void onBindViewHolder(@NonNull ClassesCustomViewHolder holder, int position) {
         ClassesInfoHolder temp = classesList.get(position);
         holder.textSubjectName.setText(temp.getSubjectName());
-        holder.textSubjectCode.setText(temp.getSubjectCode());
-        holder.textSection.setText(temp.getSection());
+        holder.textSubjectCode.setText(context.getString(R.string.subject_code_string, temp.getSubjectCode()));
+        holder.textSection.setText(context.getString(R.string.section_string, temp.getSection()));
     }
 
     @Override

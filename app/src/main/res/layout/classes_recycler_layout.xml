@@ -28,7 +28,7 @@
             android:layout_below="@id/subject_name"
             android:layout_alignParentStart="true"
             android:layout_marginStart="5dp"
-            android:text="sec : A |"
+            android:text="@string/section_string"
             android:textSize="15sp" />
 
         <TextView
@@ -38,7 +38,7 @@
             android:layout_below="@id/subject_name"
             android:layout_marginStart="5dp"
             android:layout_toEndOf="@id/section"
-            android:text="subject code : CSE1011"
+            android:text="@string/subject_code_string"
             android:textSize="15sp" />
     </RelativeLayout>
 
