@@ -89,7 +89,7 @@ public class Classes_Activity extends AppCompatActivity implements CustomClasses
     }
 
     public void addToClassesInfoHolderList(ClassesInfoHolder newClassesInfoHolder) {
-        
+
         classesInfoHolderList.add(newClassesInfoHolder);
         mAdapter.notifyItemInserted(classesInfoHolderList.size() - 1);
     }
