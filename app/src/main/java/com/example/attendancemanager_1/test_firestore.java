@@ -47,6 +47,7 @@ public class test_firestore extends AppCompatActivity {
         String date = getmEditTextDate.getText().toString();
         Map<String, Object> doc = new HashMap<String, Object>();
         doc.put("Date", date);
+
         db.collection("TestCollection").document(name).set(doc).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {

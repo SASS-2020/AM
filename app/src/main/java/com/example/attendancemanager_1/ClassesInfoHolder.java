@@ -4,9 +4,12 @@ public class ClassesInfoHolder {
     private String subjectCode;
     private String subjectName;
     private String section;
+    private String docID;
 
-    public ClassesInfoHolder(String subjectCode, String subjectName, String section)
-    {
+    public ClassesInfoHolder() {
+    }
+
+    public ClassesInfoHolder(String subjectCode, String subjectName, String section) {
         this.subjectCode = subjectCode;
         this.subjectName = subjectName;
         this.section = section;
@@ -20,8 +23,15 @@ public class ClassesInfoHolder {
         return subjectName;
     }
 
-    public String getSection()
-    {
+    public String getSection() {
         return section;
+    }
+
+    public String getDocID() {
+        return docID;
+    }
+
+    public void setDocID(String docID) {
+        this.docID = docID;
     }
 }

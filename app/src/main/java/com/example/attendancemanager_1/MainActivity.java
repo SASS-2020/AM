@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText passwordEditText = null;
     private Button buttonSignIn = null;
     private Button buttonSignUp = null;
+    private ProgressBar progressBar = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.editTextPassword);
         buttonSignIn = findViewById(R.id.button_signin);
         buttonSignUp = findViewById(R.id.button_register);
+        progressBar = findViewById(R.id.progressBar);
         constraintLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -50,23 +53,27 @@ public class MainActivity extends AppCompatActivity {
         buttonSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                showLoading();
                 signIn();
             }
         });
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, SignUpAcivity.class));
+                startActivity(new Intent(MainActivity.this, SignUpActivity.class));
+                finish();
             }
         });
     }
 
     private void signIn() {
-        startActivity(new Intent(MainActivity.this, Classes_Activity.class));//FOR TESTING PURPOSE NOT PART OF ACTUAL APP.........ACCESS WITHOUT AUTHENTICATION
-        //Uncomment the below after testing.............DO NOT CHANGE THE BELOW CODE
-        /*String email_id = mailEditText.getText().toString();
+        //startActivity(new Intent(MainActivity.this, Classes_Activity.class));//FOR TESTING PURPOSE NOT PART OF ACTUAL APP.........ACCESS WITHOUT AUTHENTICATION
+        //hideLoading();//FOR TESTING PURPOSE NOT PART OF ACTUAL APP
+        //Uncomment the below after testing.............DO NOT FUCK THE BELOW CODE
+        String email_id = mailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
         if (email_id.length() == 0 || password.length() == 0) {
+            hideLoading();
             Toast.makeText(MainActivity.this, "Check Email ID and Password", Toast.LENGTH_LONG).show();
             return;
         }
@@ -75,11 +82,21 @@ public class MainActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     startActivity(new Intent(MainActivity.this, Classes_Activity.class));
+                    finish();
                 } else {
-
+                    hideLoading();
+                    Toast.makeText(MainActivity.this, "Oh Snap! Something Went Wrong", Toast.LENGTH_LONG).show();
                 }
             }
-        });*/
+        });
+    }
+
+    private void showLoading() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void hideLoading() {
+        progressBar.setVisibility(View.GONE);
     }
 
 }

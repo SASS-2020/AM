@@ -5,24 +5,21 @@
     android:id="@+id/id_signuppage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ic_bg"
+
     tools:context=".MainActivity">
 
     <Button
         android:id="@+id/button_signupPage"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="160dp"
-        android:layout_marginBottom="210dp"
+        android:layout_marginStart="163dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/bg_button_"
         android:text="Sign Up"
         android:textColor="#ffffff"
         android:textStyle="italic"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextConfirmPasswordSignUp"
-        app:layout_constraintVertical_bias="0.596" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextConfirmPasswordSignUp" />
 
     <TextView
         android:id="@+id/textView2"
@@ -40,7 +37,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextTextName"
+        android:id="@+id/editTextName"
         android:layout_width="340dp"
         android:layout_height="40dp"
         android:layout_marginStart="50dp"
@@ -65,7 +62,7 @@
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextName" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextName" />
 
     <EditText
         android:id="@+id/editTextPasswordSignUp"
@@ -94,5 +91,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextPasswordSignUp" />
+
+    <ProgressBar
+        android:id="@+id/progressBarSignUp"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toEndOf="@+id/button_signupPage"
+        app:layout_constraintTop_toBottomOf="@+id/editTextConfirmPasswordSignUp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

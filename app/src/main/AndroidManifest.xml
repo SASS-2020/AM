@@ -12,7 +12,7 @@
         <activity android:name=".Classes_Activity"></activity>
         <activity android:name=".test_firestore" />
         <activity android:name=".ui.test_firestore" />
-        <activity android:name=".SignUpAcivity" />
+        <activity android:name=".SignUpActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

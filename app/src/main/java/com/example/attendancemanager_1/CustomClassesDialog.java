@@ -38,13 +38,10 @@ public class CustomClassesDialog extends DialogFragment {
                 String subjectName = etSubjectName.getText().toString();
                 String subjectCode = etSubjectCode.getText().toString();
                 String section = etSection.getText().toString();
-                if(subjectName.length()==0 || subjectCode.length()==0 || section.length()==0)
-                {
+                if (subjectName.length() == 0 || subjectCode.length() == 0 || section.length() == 0) {
                     Toast.makeText(mcontext, "EmptyField", Toast.LENGTH_LONG).show();
                     return;
-                }
-                else
-                {
+                } else {
                     listener.addToClassesInfoHolderList(new ClassesInfoHolder(subjectCode, subjectName, section));
                     dismiss();
                 }

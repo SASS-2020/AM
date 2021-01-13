@@ -1,5 +1,6 @@
 package com.example.attendancemanager_1;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -7,8 +8,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -19,12 +31,15 @@ public class Classes_Activity extends AppCompatActivity implements CustomClasses
     private RecyclerView.Adapter mAdapter = null;
     private ArrayList<ClassesInfoHolder> classesInfoHolderList;
     private FloatingActionButton floatingAddButton;
+    private FirebaseFirestore db;
+    private CollectionReference cRef;
+    private int countClasses = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_classes);
-        createRecyclerView();
+
         floatingAddButton = findViewById(R.id.floating_button_add_classes);
         floatingAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,8 +47,12 @@ public class Classes_Activity extends AppCompatActivity implements CustomClasses
                 showCustomClassesDialog();
             }
         });
-
+        db = FirebaseFirestore.getInstance();
+        cRef = db.collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("Classes");//+ FirebaseAuth.getInstance().getCurrentUser().getUid()+"/Classes");
+        classesInfoHolderList = new ArrayList<ClassesInfoHolder>();
+        createRecyclerView();
     }
+
 
     public void showCustomClassesDialog() {
         DialogFragment dialog = new CustomClassesDialog();
@@ -42,23 +61,36 @@ public class Classes_Activity extends AppCompatActivity implements CustomClasses
 
     public void createRecyclerView() {
         mRecyclerView = findViewById(R.id.classes_recyclerView);
-        classesInfoHolderList = getClassesInfoHolderList();
+        getClassesInfoHolderList();
         mAdapter = new ClassesCustomAdapter(classesInfoHolderList, this);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    public ArrayList<ClassesInfoHolder> getClassesInfoHolderList() {
-        ArrayList<ClassesInfoHolder> infoHolder = new ArrayList<>();
-        infoHolder.add(new ClassesInfoHolder("CSE1011", "SEPA", "A"));
-        infoHolder.add(new ClassesInfoHolder("CSE1011", "SEPA", "B"));
-        infoHolder.add(new ClassesInfoHolder("CSE1023", "TWP", "A"));
-        return infoHolder;
+    public void getClassesInfoHolderList() {//Gets data from Database
+        //final ArrayList<ClassesInfoHolder> infoHolder = new ArrayList<>();
+        cRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful())
+                {
+                    for(QueryDocumentSnapshot document : task.getResult())
+                    {
+                        classesInfoHolderList.add(document.toObject(ClassesInfoHolder.class));
+                    }
+                }
+            }
+        });
+        if(classesInfoHolderList.size()==0)
+        {
+            Toast.makeText(Classes_Activity.this, "It's Lonely Here", Toast.LENGTH_LONG).show();
+        }
     }
 
     public void addToClassesInfoHolderList(ClassesInfoHolder newClassesInfoHolder) {
+        
         classesInfoHolderList.add(newClassesInfoHolder);
-        mAdapter.notifyItemInserted(classesInfoHolderList.size()-1);
+        mAdapter.notifyItemInserted(classesInfoHolderList.size() - 1);
     }
 }
