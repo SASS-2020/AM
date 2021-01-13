@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -49,7 +50,7 @@ public class Classes_Activity extends AppCompatActivity implements CustomClasses
         });
         db = FirebaseFirestore.getInstance();
         cRef = db.collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("Classes");//+ FirebaseAuth.getInstance().getCurrentUser().getUid()+"/Classes");
-        classesInfoHolderList = new ArrayList<ClassesInfoHolder>();
+        classesInfoHolderList = new ArrayList<>();
         createRecyclerView();
     }
 
@@ -73,24 +74,55 @@ public class Classes_Activity extends AppCompatActivity implements CustomClasses
         cRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful())
-                {
-                    for(QueryDocumentSnapshot document : task.getResult())
-                    {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
                         classesInfoHolderList.add(document.toObject(ClassesInfoHolder.class));
                     }
+                    notifyChanges();
                 }
             }
         });
-        if(classesInfoHolderList.size()==0)
-        {
+        if (classesInfoHolderList.size() == 0) {
             Toast.makeText(Classes_Activity.this, "It's Lonely Here", Toast.LENGTH_LONG).show();
         }
     }
 
     public void addToClassesInfoHolderList(ClassesInfoHolder newClassesInfoHolder) {
-
         classesInfoHolderList.add(newClassesInfoHolder);
         mAdapter.notifyItemInserted(classesInfoHolderList.size() - 1);
+        cRef.add(newClassesInfoHolder).addOnSuccessListener(new CustomSuccessListener(newClassesInfoHolder)).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(Classes_Activity.this, "Something's Wrong4", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    public void notifyChanges() {
+        mAdapter.notifyDataSetChanged();
+    }
+
+    public void showLoading() {
+
+    }
+
+    public void hideLoading() {
+
+    }
+
+    private static class CustomSuccessListener implements OnSuccessListener<DocumentReference> {
+        private ClassesInfoHolder mInfo;
+
+        CustomSuccessListener() {
+        }
+
+        CustomSuccessListener(ClassesInfoHolder mInfo) {
+            this.mInfo = mInfo;
+        }
+
+        @Override
+        public void onSuccess(DocumentReference documentReference) {
+            mInfo.setDocID(documentReference.getId());
+        }
     }
 }
