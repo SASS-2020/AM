@@ -1,6 +1,8 @@
 package com.example.attendancemanager_1;
 
-public class ClassesInfoHolder {
+import java.io.Serializable;
+
+public class ClassesInfoHolder implements Serializable {
     private String subjectCode;
     private String subjectName;
     private String section;

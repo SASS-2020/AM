@@ -6,6 +6,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -29,12 +30,12 @@ public class Classes_Activity extends AppCompatActivity implements CustomClasses
 
     private RecyclerView mRecyclerView = null;
     private RecyclerView.LayoutManager mLayoutManager = null;
-    private RecyclerView.Adapter mAdapter = null;
+    private ClassesCustomAdapter mAdapter = null;
     private ArrayList<ClassesInfoHolder> classesInfoHolderList;
     private FloatingActionButton floatingAddButton;
     private FirebaseFirestore db;
     private CollectionReference cRef;
-    private int countClasses = 0;
+    private final int countClasses = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,7 @@ public class Classes_Activity extends AppCompatActivity implements CustomClasses
         cRef = db.collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("Classes");//+ FirebaseAuth.getInstance().getCurrentUser().getUid()+"/Classes");
         classesInfoHolderList = new ArrayList<>();
         createRecyclerView();
+        getClassesInfoHolderList();
     }
 
 
@@ -62,8 +64,16 @@ public class Classes_Activity extends AppCompatActivity implements CustomClasses
 
     public void createRecyclerView() {
         mRecyclerView = findViewById(R.id.classes_recyclerView);
-        getClassesInfoHolderList();
+        //getClassesInfoHolderList();
         mAdapter = new ClassesCustomAdapter(classesInfoHolderList, this);
+        mAdapter.setOnClickListener(new ClassesCustomAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Intent intent = new Intent(Classes_Activity.this, StudentsListActivity.class);
+                intent.putExtra("selectedClass", classesInfoHolderList.get(position));
+                startActivity(intent);
+            }
+        });
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
@@ -78,13 +88,13 @@ public class Classes_Activity extends AppCompatActivity implements CustomClasses
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         classesInfoHolderList.add(document.toObject(ClassesInfoHolder.class));
                     }
+                    if (classesInfoHolderList.size() == 0) {
+                        Toast.makeText(Classes_Activity.this, "It's Lonely Here", Toast.LENGTH_LONG).show();
+                    }
                     notifyChanges();
                 }
             }
         });
-        if (classesInfoHolderList.size() == 0) {
-            Toast.makeText(Classes_Activity.this, "It's Lonely Here", Toast.LENGTH_LONG).show();
-        }
     }
 
     public void addToClassesInfoHolderList(ClassesInfoHolder newClassesInfoHolder) {

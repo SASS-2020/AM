@@ -9,9 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Classes_Activity"></activity>
+        <activity android:name=".StudentsListActivity"></activity>
+        <activity android:name=".Classes_Activity" />
         <activity android:name=".test_firestore" />
-        <activity android:name=".ui.test_firestore" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

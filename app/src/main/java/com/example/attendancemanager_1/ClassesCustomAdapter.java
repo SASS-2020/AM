@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,20 +15,39 @@ import java.util.ArrayList;
 
 public class ClassesCustomAdapter extends RecyclerView.Adapter<ClassesCustomAdapter.ClassesCustomViewHolder> {
 
-    private ArrayList<ClassesInfoHolder> classesList;
-    private Context context;
+    private final ArrayList<ClassesInfoHolder> classesList;
+    private final Context context;
+    private OnItemClickListener mListener;
+    public interface OnItemClickListener
+    {
+        void onItemClick(int position);
+    }
+
     public static class ClassesCustomViewHolder extends RecyclerView.ViewHolder {
 
         TextView textSubjectName;
         TextView textSubjectCode;
         TextView textSection;
 
-        public ClassesCustomViewHolder(@NonNull View itemView) {
+        public ClassesCustomViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
 
             super(itemView);
             textSubjectName = itemView.findViewById(R.id.subject_name);
             textSubjectCode = itemView.findViewById(R.id.subject_code);
             textSection = itemView.findViewById(R.id.section);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listener != null)
+                    {
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION)
+                        {
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 
@@ -37,10 +57,15 @@ public class ClassesCustomAdapter extends RecyclerView.Adapter<ClassesCustomAdap
         this.context = context;
     }
 
+    public void setOnClickListener(OnItemClickListener listener)
+    {
+        mListener = listener;
+    }
+
     @NonNull
     @Override
     public ClassesCustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ClassesCustomViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.classes_recycler_layout, parent, false));
+        return new ClassesCustomViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.classes_recycler_layout, parent, false), mListener);
     }
 
     @Override

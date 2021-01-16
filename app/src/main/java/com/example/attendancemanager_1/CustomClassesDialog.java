@@ -52,7 +52,7 @@ public class CustomClassesDialog extends DialogFragment {
     }
 
     public interface CustomClassesDialogListener {
-        public void addToClassesInfoHolderList(ClassesInfoHolder newClassesInfoHolder);
+        void addToClassesInfoHolderList(ClassesInfoHolder newClassesInfoHolder);
     }
 
     CustomClassesDialogListener listener;
