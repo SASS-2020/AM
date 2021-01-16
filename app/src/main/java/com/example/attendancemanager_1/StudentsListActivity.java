@@ -11,9 +11,13 @@ import android.widget.Toast;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import java.util.ArrayList;
+
 public class StudentsListActivity extends AppCompatActivity {
 
     private ClassesInfoHolder selectedClass;
+    private ArrayList<StudentInfoHolder> StudentInfoHolderList;
+    private ArrayList<DatesInfoHolder> DatesInfoHolderList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +28,7 @@ public class StudentsListActivity extends AppCompatActivity {
             selectedClass = (ClassesInfoHolder) intent.getSerializableExtra("selectedClass");
         }
         //Toast.makeText(StudentsListActivity.this, selectedClass.getSubjectName()+""+selectedClass.getSubjectCode(), Toast.LENGTH_LONG).show();//Test
-        setTabnView();
+        //setTabnView();
 
 
     }
@@ -33,7 +37,7 @@ public class StudentsListActivity extends AppCompatActivity {
         TabLayout tabLayout = findViewById(R.id.tablayout);
 
         ViewPager2 viewPager2 = findViewById(R.id.viewpager);
-        viewPager2.setAdapter(new CustomPagerAdapter(this));
+        viewPager2.setAdapter(new CustomPagerAdapter(this, StudentInfoHolderList, DatesInfoHolderList));
 
         TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout, viewPager2,
 
