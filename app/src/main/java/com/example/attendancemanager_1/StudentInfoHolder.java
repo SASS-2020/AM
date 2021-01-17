@@ -15,11 +15,11 @@ public class StudentInfoHolder implements Parcelable {
     public StudentInfoHolder() {
     }
 
-    public StudentInfoHolder(String name, String registration, int presentCount) {
+    public StudentInfoHolder(String name, String registration, int presentCount, int presenceStatus) {
         this.name = name;
         this.registration = registration;
         this.presentCount = presentCount;
-
+        this.presenceStatus = presenceStatus;
     }
 
     protected StudentInfoHolder(Parcel in) {

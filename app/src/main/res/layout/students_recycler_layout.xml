@@ -4,45 +4,30 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:clickable="true"
-    android:focusable="true"
     app:cardCornerRadius="4dp">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/subject_name"
+            android:id="@+id/tvname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:layout_margin="5dp"
-            android:text="SEPA"
+            android:text="SomeBody"
             android:textColor="#000000"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/section"
+            android:id="@+id/tvregd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/subject_name"
-            android:layout_alignParentStart="true"
             android:layout_marginStart="5dp"
-            android:text="@string/section_string"
+            android:text="Regd. No. : 1741012000"
             android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/subject_code"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/subject_name"
-            android:layout_marginStart="5dp"
-            android:layout_toEndOf="@id/section"
-            android:text="@string/subject_code_string"
-            android:textSize="15sp" />
-    </RelativeLayout>
-
+    </LinearLayout>
 
 </androidx.cardview.widget.CardView>

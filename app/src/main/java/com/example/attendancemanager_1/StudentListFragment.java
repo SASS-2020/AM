@@ -1,8 +1,12 @@
 package com.example.attendancemanager_1;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +25,9 @@ public class StudentListFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    private RecyclerView recyclerViewStudentList;
+    //private RecyclerView.LayoutManager layoutManager;
 
     // TODO: Rename and change types of parameters
     private ArrayList<StudentInfoHolder> mParam1;
@@ -56,6 +63,7 @@ public class StudentListFragment extends Fragment {
             mParam1 = getArguments().getParcelableArrayList(ARG_PARAM1);
             //mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
@@ -63,6 +71,10 @@ public class StudentListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_student_list, container, false);
+        recyclerViewStudentList = v.findViewById(R.id.studentlistrv);
+        recyclerViewStudentList.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerViewStudentList.setAdapter(new StudentListAdapter(mParam1));
         return v;
     }
+    
 }

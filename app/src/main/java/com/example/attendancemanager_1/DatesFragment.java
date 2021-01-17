@@ -3,6 +3,8 @@ package com.example.attendancemanager_1;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +23,8 @@ public class DatesFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     //private static final String ARG_PARAM2 = "param2";
+
+    private RecyclerView datesRecyclerView;
 
     // TODO: Rename and change types of parameters
     private ArrayList<DatesInfoHolder> mParam1;
@@ -62,6 +66,9 @@ public class DatesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_dates, container, false);
+        datesRecyclerView = v.findViewById(R.id.datesrv);
+        datesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        datesRecyclerView.setAdapter(new DatesAdapter(mParam1));
         return v;
     }
 }
