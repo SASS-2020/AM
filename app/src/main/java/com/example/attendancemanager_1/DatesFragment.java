@@ -30,6 +30,11 @@ public class DatesFragment extends Fragment {
     private ArrayList<DatesInfoHolder> mParam1;
     //private String mParam2;
 
+    public interface DatesFragmentListener
+    {
+        void attachDatesRecyclerView(RecyclerView recyclerView);
+    }
+
     public DatesFragment() {
         // Required empty public constructor
     }

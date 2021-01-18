@@ -23,15 +23,13 @@ public class CustomPagerAdapter extends FragmentStateAdapter {
         {
             case 0:
                 return StudentListFragment.newInstance(arg0);
-            case 1:
-                return DatesFragment.newInstance(arg1);
             default:
-                return AttendanceFragment.newInstance(arg0);
+                return DatesFragment.newInstance(arg1);
         }
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 2;
     }
 }

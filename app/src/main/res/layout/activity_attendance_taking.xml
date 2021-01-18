@@ -4,24 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Classes_Activity">
+    tools:context=".AttendanceTakingActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/classes_recyclerView"
+        android:id="@+id/attendancerv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floating_button_add_classes"
+        android:id="@+id/fabSaveAttendance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:clickable="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="15dp"
-        android:src="@drawable/ic_baseline_add"
-        tools:layout_editor_absoluteX="339dp"
-        tools:layout_editor_absoluteY="587dp"
-        />
+        app:srcCompat="@android:drawable/ic_menu_save"
+        tools:layout_editor_absoluteX="355dp"
+        tools:layout_editor_absoluteY="614dp" />
 </RelativeLayout>

@@ -33,6 +33,13 @@ public class StudentListFragment extends Fragment {
     private ArrayList<StudentInfoHolder> mParam1;
     //private String mParam2;
 
+    public interface StudentFragmentListener
+    {
+        void attachStudentRecyclerView(RecyclerView recyclerView);
+    }
+
+    StudentFragmentListener listener;
+
     public StudentListFragment() {
         // Required empty public constructor
     }
@@ -72,9 +79,22 @@ public class StudentListFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_student_list, container, false);
         recyclerViewStudentList = v.findViewById(R.id.studentlistrv);
+        listener.attachStudentRecyclerView(recyclerViewStudentList);
         recyclerViewStudentList.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerViewStudentList.setAdapter(new StudentListAdapter(mParam1));
         return v;
     }
-    
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if(context instanceof StudentFragmentListener)
+        {
+            listener = (StudentFragmentListener)context;
+        }
+        else
+        {
+            //Add an Exception
+        }
+    }
 }

@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".StudentsListActivity"></activity>
+        <activity android:name=".AttendanceTakingActivity"></activity>
+        <activity android:name=".AttendanceDetailsActivity" />
+        <activity android:name=".StudentsListActivity" />
         <activity android:name=".Classes_Activity" />
         <activity android:name=".test_firestore" />
         <activity android:name=".SignUpActivity" />

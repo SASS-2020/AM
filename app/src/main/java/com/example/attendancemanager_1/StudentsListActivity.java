@@ -2,26 +2,32 @@ package com.example.attendancemanager_1;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
 
-public class StudentsListActivity extends AppCompatActivity {
+public class StudentsListActivity extends AppCompatActivity implements CustomStudentDialog.CustomStudentDialogListener, StudentListFragment.StudentFragmentListener {
 
     private ClassesInfoHolder selectedClass;
     private ArrayList<StudentInfoHolder> studentInfoHolderList;
     private ArrayList<DatesInfoHolder> datesInfoHolderList;
+    private ArrayList<AttendanceInfoHolder> attendanceInfoHolderList;
     private RecyclerView studentListRecyclerView;
     private RecyclerView datesRecyclerView;
     private RecyclerView attendanceRecyclerView;
+    private FloatingActionButton addStudentButton;
+    private FloatingActionButton takeAttendanceButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +41,25 @@ public class StudentsListActivity extends AppCompatActivity {
         //setTabnView();
         getStudentList();
         getDatesList();
+        addStudentButton = findViewById(R.id.fabaddstudent);
+        takeAttendanceButton = findViewById(R.id.fabtakeattendance);
+        addStudentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCustomStudentDialog();
+            }
+        });
+        takeAttendanceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(StudentsListActivity.this, AttendanceTakingActivity.class);
+                Bundle extras = new Bundle();
+                extras.putParcelableArrayList("StudentList", studentInfoHolderList);
+                i.putExtras(extras);
+                startActivity(i);
+            }
+        });
         setTabnView();
-
     }
 
     public void setTabnView() {
@@ -60,10 +83,6 @@ public class StudentsListActivity extends AppCompatActivity {
                                 tab.setText("Dates");
                                 tab.setIcon(R.drawable.ic_dates);
                                 break;
-                            }
-                            case 2: {
-                                tab.setText("Attendance");
-                                tab.setIcon(R.drawable.ic_attendance);
                             }
                         }
                     }
@@ -94,12 +113,34 @@ public class StudentsListActivity extends AppCompatActivity {
         datesInfoHolderList.add(new DatesInfoHolder("2020-12-10"));
         datesInfoHolderList.add(new DatesInfoHolder("2020-12-11"));
     }
-    public void showLoading()
+
+    public void showLoading() {
+
+    }
+
+    public void hideLoading() {
+
+    }
+
+    public void showCustomStudentDialog() {
+        DialogFragment dialog = new CustomStudentDialog();
+        dialog.show(getSupportFragmentManager(), "CustomStudentDialog");
+    }
+
+    public void sortList()
     {
 
     }
-    public void hideLoading()
-    {
 
+    @Override
+    public void addToStudentInfoHolderList(StudentInfoHolder studentInfoHolder) {
+        studentInfoHolderList.add(studentInfoHolder);
+        sortList();
+        studentListRecyclerView.getAdapter().notifyDataSetChanged();
+    }
+
+    @Override
+    public void attachStudentRecyclerView(RecyclerView recyclerView) {
+        studentListRecyclerView = recyclerView;
     }
 }
