@@ -33,8 +33,7 @@ public class StudentListFragment extends Fragment {
     private ArrayList<StudentInfoHolder> mParam1;
     //private String mParam2;
 
-    public interface StudentFragmentListener
-    {
+    public interface StudentFragmentListener {
         void attachStudentRecyclerView(RecyclerView recyclerView);
     }
 
@@ -49,7 +48,7 @@ public class StudentListFragment extends Fragment {
      * this fragment using the provided parameters.
      *
      * @param param1 Parameter 1.
-     * //@param param2 Parameter 2.
+     *               //@param param2 Parameter 2.
      * @return A new instance of fragment StudentListFragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -88,12 +87,9 @@ public class StudentListFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        if(context instanceof StudentFragmentListener)
-        {
-            listener = (StudentFragmentListener)context;
-        }
-        else
-        {
+        if (context instanceof StudentFragmentListener) {
+            listener = (StudentFragmentListener) context;
+        } else {
             //Add an Exception
         }
     }

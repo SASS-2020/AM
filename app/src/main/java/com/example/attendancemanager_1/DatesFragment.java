@@ -1,7 +1,9 @@
 package com.example.attendancemanager_1;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,10 +32,11 @@ public class DatesFragment extends Fragment {
     private ArrayList<DatesInfoHolder> mParam1;
     //private String mParam2;
 
-    public interface DatesFragmentListener
-    {
+    public interface DatesFragmentListener {
         void attachDatesRecyclerView(RecyclerView recyclerView);
     }
+
+    private DatesFragmentListener listener;
 
     public DatesFragment() {
         // Required empty public constructor
@@ -44,7 +47,7 @@ public class DatesFragment extends Fragment {
      * this fragment using the provided parameters.
      *
      * @param param1 Parameter 1.
-     * //@param param2 Parameter 2.
+     *               //@param param2 Parameter 2.
      * @return A new instance of fragment DatesFragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -72,8 +75,21 @@ public class DatesFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_dates, container, false);
         datesRecyclerView = v.findViewById(R.id.datesrv);
+        listener.attachDatesRecyclerView(datesRecyclerView);
         datesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         datesRecyclerView.setAdapter(new DatesAdapter(mParam1));
         return v;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof DatesFragmentListener) {
+            listener = (DatesFragmentListener) context;
+        }
+        else
+        {
+            //Throws an Exception
+        }
     }
 }

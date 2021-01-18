@@ -11,13 +11,21 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class StudentsListActivity extends AppCompatActivity implements CustomStudentDialog.CustomStudentDialogListener, StudentListFragment.StudentFragmentListener {
+public class StudentsListActivity extends AppCompatActivity implements CustomStudentDialog.CustomStudentDialogListener, StudentListFragment.StudentFragmentListener, DatesFragment.DatesFragmentListener {
 
     private ClassesInfoHolder selectedClass;
     private ArrayList<StudentInfoHolder> studentInfoHolderList;
@@ -25,9 +33,10 @@ public class StudentsListActivity extends AppCompatActivity implements CustomStu
     private ArrayList<AttendanceInfoHolder> attendanceInfoHolderList;
     private RecyclerView studentListRecyclerView;
     private RecyclerView datesRecyclerView;
-    private RecyclerView attendanceRecyclerView;
     private FloatingActionButton addStudentButton;
     private FloatingActionButton takeAttendanceButton;
+    private CollectionReference cRefStudent;
+    private CollectionReference cRefDates;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +48,12 @@ public class StudentsListActivity extends AppCompatActivity implements CustomStu
         }
         //Toast.makeText(StudentsListActivity.this, selectedClass.getSubjectName()+""+selectedClass.getSubjectCode(), Toast.LENGTH_LONG).show();//Test
         //setTabnView();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        cRefStudent = db.collection("Users/"+ FirebaseAuth.getInstance().getCurrentUser().getUid()+"/Classes/"+selectedClass.getDocID()+"/Students");
+        cRefDates = db.collection("Users/"+ FirebaseAuth.getInstance().getCurrentUser().getUid()+"/Classes/"+selectedClass.getDocID()+"/Date");
+        studentInfoHolderList = new ArrayList<StudentInfoHolder>();
+        datesInfoHolderList = new ArrayList<DatesInfoHolder>();
+        setTabnView();
         getStudentList();
         getDatesList();
         addStudentButton = findViewById(R.id.fabaddstudent);
@@ -59,7 +74,6 @@ public class StudentsListActivity extends AppCompatActivity implements CustomStu
                 startActivity(i);
             }
         });
-        setTabnView();
     }
 
     public void setTabnView() {
@@ -92,26 +106,25 @@ public class StudentsListActivity extends AppCompatActivity implements CustomStu
     }
 
     public void getStudentList() {
-        studentInfoHolderList = new ArrayList<StudentInfoHolder>();
-        studentInfoHolderList.add(new StudentInfoHolder("SomeName", "1741012000", 0, 0));
-        studentInfoHolderList.add(new StudentInfoHolder("SomeName", "1741012001", 0, 0));
-        studentInfoHolderList.add(new StudentInfoHolder("SomeName", "1741012002", 0, 0));
-        studentInfoHolderList.add(new StudentInfoHolder("SomeName", "1741012003", 0, 0));
-        studentInfoHolderList.add(new StudentInfoHolder("SomeName", "1741012004", 0, 0));
-        studentInfoHolderList.add(new StudentInfoHolder("SomeName", "1741012005", 0, 0));
+        cRefStudent.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful())
+                {
+                    for(QueryDocumentSnapshot document : task.getResult())
+                    {
+                        studentInfoHolderList.add(document.toObject(StudentInfoHolder.class));
+                    }
+                }
+            }
+        });
+
 
     }
 
     public void getDatesList() {
-        datesInfoHolderList = new ArrayList<DatesInfoHolder>();
-        datesInfoHolderList.add(new DatesInfoHolder("2020-12-4"));
-        datesInfoHolderList.add(new DatesInfoHolder("2020-12-5"));
-        datesInfoHolderList.add(new DatesInfoHolder("2020-12-6"));
-        datesInfoHolderList.add(new DatesInfoHolder("2020-12-7"));
-        datesInfoHolderList.add(new DatesInfoHolder("2020-12-8"));
-        datesInfoHolderList.add(new DatesInfoHolder("2020-12-9"));
-        datesInfoHolderList.add(new DatesInfoHolder("2020-12-10"));
-        datesInfoHolderList.add(new DatesInfoHolder("2020-12-11"));
+
+
     }
 
     public void showLoading() {
@@ -137,10 +150,21 @@ public class StudentsListActivity extends AppCompatActivity implements CustomStu
         studentInfoHolderList.add(studentInfoHolder);
         sortList();
         studentListRecyclerView.getAdapter().notifyDataSetChanged();
+        cRefStudent.add(studentInfoHolder).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentReference> task) {
+                //Add complete confirmation
+            }
+        });
     }
 
     @Override
     public void attachStudentRecyclerView(RecyclerView recyclerView) {
         studentListRecyclerView = recyclerView;
+    }
+
+    @Override
+    public void attachDatesRecyclerView(RecyclerView recyclerView) {
+        datesRecyclerView = recyclerView;
     }
 }

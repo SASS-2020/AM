@@ -87,7 +87,9 @@ public class Classes_Activity extends AppCompatActivity implements CustomClasses
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        classesInfoHolderList.add(document.toObject(ClassesInfoHolder.class));
+                        ClassesInfoHolder temp = document.toObject(ClassesInfoHolder.class);
+                        temp.setDocID(document.getId());
+                        classesInfoHolderList.add(temp);
                     }
                     if (classesInfoHolderList.size() == 0) {
                         Toast.makeText(Classes_Activity.this, "It's Lonely Here", Toast.LENGTH_LONG).show();
