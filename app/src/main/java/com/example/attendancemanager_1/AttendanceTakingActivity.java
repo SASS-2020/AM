@@ -2,6 +2,7 @@ package com.example.attendancemanager_1;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,8 +34,8 @@ public class AttendanceTakingActivity extends AppCompatActivity {
         attendanceInfoList = new ArrayList<>();
         fabSave = findViewById(R.id.fabSaveAttendance);
         mSwipePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        presentDrawable = getDrawable(R.drawable.ic_present);
-        absentDrawable = getDrawable(R.drawable.ic_absent);
+        presentDrawable = ContextCompat.getDrawable(this, R.drawable.ic_present);
+        absentDrawable = ContextCompat.getDrawable(this, R.drawable.ic_absent);
         fabSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,10 +49,7 @@ public class AttendanceTakingActivity extends AppCompatActivity {
 
     void saveToDatabase()
     {
-        for(StudentInfoHolder student : studentInfoHolderList)
-        {
-            attendanceInfoList.add(new AttendanceInfoHolder(student.getName(), student.getRegistration()));
-        }
+        //Save the data in attendanceInfoList
     }
 
     void createRecyclerView()
@@ -67,6 +65,10 @@ public class AttendanceTakingActivity extends AppCompatActivity {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                if(direction == ItemTouchHelper.RIGHT)
+                {
+                    attendanceInfoList.add(new AttendanceInfoHolder(studentInfoHolderList.get(viewHolder.getAdapterPosition()).getName(), studentInfoHolderList.get(viewHolder.getAdapterPosition()).getRegistration()));
+                }
                 studentInfoHolderList.remove(viewHolder.getAdapterPosition());
                 attendanceRecyclerView.getAdapter().notifyItemRemoved(viewHolder.getAdapterPosition());
             }
@@ -76,14 +78,14 @@ public class AttendanceTakingActivity extends AppCompatActivity {
 
                 if(actionState == ItemTouchHelper.ACTION_STATE_SWIPE)
                 {
-                    int iconLeft = 0;
-                    int iconRight = 0;
-                    int iconTop = 0;
-                    int iconBottom = 0;
-                    int rectLeft = 0;
-                    int rectTop = 0;
-                    int rectRight = 0;
-                    int rectBottom = 0;
+                    int iconLeft;
+                    int iconRight;
+                    int iconTop;
+                    int iconBottom;
+                    int rectLeft;
+                    int rectTop;
+                    int rectRight ;
+                    int rectBottom;
 
                     View v = viewHolder.itemView;
                     if(dX<0)
